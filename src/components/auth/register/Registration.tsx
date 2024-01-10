@@ -1,15 +1,12 @@
 import { FC, useRef, useState } from "react";
 
-import {
-  IRegistrationData,
-  IRegistrationDataExpanded,
-} from "./interface/IRegistrationData";
-import { IFormConfig } from "../../shared/components/Form/IForm";
-import { TRefreshFunction } from "../../shared/models/TRefreshFunction";
+import { IFormConfig } from "../../../shared/components/Form/IForm";
+import { TRefreshFunction } from "../../../shared/models/TRefreshFunction";
 
-import Form from "../../shared/components/Form/Form";
+import Form from "../../../shared/components/Form/Form";
 
 import axios, { AxiosError } from "axios";
+import { IRegistrationData, IRegistrationDataExpanded } from "./interface/IRegistrationData";
 
 const Registration: FC = () => {
   const form = useRef<TRefreshFunction>(null);
@@ -110,7 +107,7 @@ const Registration: FC = () => {
         country: data.country,
       };
       const response = await axios.post(
-        "http://localhost:3001/user",
+        "/user",
         responseData
       );
       const token = response.data.token;

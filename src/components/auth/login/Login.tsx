@@ -1,16 +1,16 @@
 import { FC, useRef, useState } from "react";
-import Form from "../../shared/components/Form/Form";
+import Form from "../../../shared/components/Form/Form";
 
-import { IFormConfig } from "../../shared/components/Form/IForm";
-import { ILoginData } from "./interface/ILoginData";
+import { IFormConfig } from "../../../shared/components/Form/IForm";
 
 import { AxiosError } from "axios";
-import axiosInstance from "../../shared/traffic/axios";
+import axiosInstance from "../../../shared/traffic/axios";
 
-import { TRefreshFunction } from "../../shared/models/TRefreshFunction";
+import { TRefreshFunction } from "../../../shared/models/TRefreshFunction";
 
 import { redirect } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { ILoginData } from "./interface/ILoginData";
 
 const Login: FC = () => {
   const form = useRef<TRefreshFunction>(null);
@@ -64,7 +64,7 @@ const Login: FC = () => {
   };
 
   return (
-    <div>
+    <div style={{ margin: 'auto' }}>
       <Form ref={form} config={config} passData={passData}></Form>
     </div>
   );
