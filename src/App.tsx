@@ -1,16 +1,18 @@
 import "./App.css";
 
-import Login from "./components/Auth/Login/Login";
-import Dashboard from "./components/Dashboard/Dashboard";
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoutes from "./shared/util/privateRoutes";
+
+import Dashboard from "./components/Dashboard/Dashboard";
+import Login from "./components/auth/login/Login";
 import NotFound from "./components/NotFound/NotFound";
+import Navigation from "./components/Navigation/Navigation";
 
 function App() {
   return (
-    <div style={{ display: 'flex', margin: 0, width: "100vw", height: "100vh" }}>
+    <>
       <Router>
+        <Navigation />
         <Routes>
           <Route element={<PrivateRoutes />}>
             <Route path="/" element={<Dashboard />} />
@@ -19,7 +21,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-    </div>
+    </>
   );
 }
 

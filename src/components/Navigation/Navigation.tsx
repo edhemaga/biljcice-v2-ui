@@ -1,11 +1,16 @@
 import { FC } from "react";
+
+//Material
 import { AppBar, Toolbar, Button, makeStyles } from "@material-ui/core";
+
+//Hooks
+import { useNavigate } from "react-router-dom";
 
 // Custom styles using makeStyles
 const useStyles = makeStyles((theme) => ({
   appBar: {
     width: "100%",
-    height: "auto",
+    height: "100px",
     marginBottom: theme.spacing(2),
   },
   logoutButton: {
@@ -14,8 +19,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navigation: FC = () => {
+  const navigate = useNavigate();
+
   const logout = (): void => {
     localStorage.setItem("token", "");
+    navigate("/login");
   };
   const classes = useStyles();
 
