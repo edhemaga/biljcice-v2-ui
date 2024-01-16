@@ -60,7 +60,7 @@ const Device: FC<IDevice> = (data: IDevice) => {
   const { id, status, createdOn, updatedOn, geoLocation } = data;
   return (
     <Paper classes={classes} style={{ padding: 10 }} elevation={3}>
-      <Typography variant="h6">Device</Typography>
+      <div><Typography variant="h6">Device</Typography></div>
       <hr />
       <div className={classes.row}>
         <div className={classes.rowContent}>

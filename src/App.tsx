@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoutes from "./shared/util/privateRoutes";
 
 import Dashboard from "./components/Dashboard/Dashboard";
-import Login from "./components/auth/login/Login";
+import Login from "./components/Auth/Login/Login";
 import NotFound from "./components/NotFound/NotFound";
 import Navigation from "./components/Navigation/Navigation";
 import { useEffect, useState } from "react";

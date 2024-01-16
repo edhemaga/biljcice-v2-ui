@@ -12,7 +12,6 @@ import { set } from "../../redux/user/userSlice";
 const useStyles = makeStyles((theme) => ({
   appBar: {
     width: "100%",
-    height: "100px",
     marginBottom: theme.spacing(2),
   },
   logoutButton: {
