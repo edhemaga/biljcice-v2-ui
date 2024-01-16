@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { IUser } from "../../shared/models/User/IUser";
-import { act } from "react-dom/test-utils";
 
 const initialState: Partial<IUser> = {
     id: "",
@@ -27,8 +26,9 @@ const userSlice = createSlice({
             state.email = action.payload.email;
             state.phone = action.payload.phone;
             state.country = action.payload.country;
-            state.devices = [];
-        }
+            state.devices = action.payload.devices;
+        },
+        get: (state) => { }
     }
 });
 

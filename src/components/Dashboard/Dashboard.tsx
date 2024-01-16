@@ -14,7 +14,7 @@ const Dashboard: FC = () => {
 
   //Poslije koristiti listu uređadaj
   const user = useSelector((state: RootState) => state.user.email);
-
+  
   const [device, setDevice] = useState<IDevice>({
     id: "08afbc64-6271-4f3f-b0a2-a0aca06bdcb9",
     status: EStatus.Active,
@@ -40,10 +40,13 @@ const Dashboard: FC = () => {
     fetchData();
   }, []);
   return (
-    <div>
+    <>
+      <div>
+
+      </div>
       {isLoading && <CircularProgress size={40} />}
       {!isLoading && <Device {...device} />}
-    </div>
+    </>
   );
 };
 

@@ -5,6 +5,8 @@ import { AppBar, Toolbar, Button, makeStyles } from "@material-ui/core";
 
 //Hooks
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { set } from "../../redux/user/userSlice";
 
 // Custom styles using makeStyles
 const useStyles = makeStyles((theme) => ({
@@ -19,10 +21,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navigation: FC = () => {
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const logout = (): void => {
     localStorage.setItem("token", "");
+    dispatch(set({}));
     navigate("/login");
   };
   const classes = useStyles();

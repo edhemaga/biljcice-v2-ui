@@ -15,6 +15,9 @@ import axiosInstance from "../../../shared/traffic/axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { set } from "../../../redux/user/userSlice";
+import { IDevice } from "../../../shared/components/Device/IDevice";
+import { jwtDecode } from "jwt-decode";
+import { getUserData } from "../../../shared/helpers/helper";
 
 const Login: FC = () => {
   const dispatch = useDispatch();
@@ -58,21 +61,15 @@ const Login: FC = () => {
   const passData = async (data: ILoginData): Promise<void> => {
     try {
       const response = await axiosInstance.post("/user/login", data);
-      const token = response.data.token;
+      const token = response.data;
 
       if (!token) throw new Error("Token not found!");
 
+      //Možda prebaciti u helper ili posebnu funkciju
       localStorage.setItem("token", token);
 
-      const userData: Partial<IUser> = {
-        name: response.data?.name,
-        surname: response.data?.surname,
-        email: response.data?.email,
-        phone: response.data?.phone,
-        country: response.data?.country,
-      };
-
-      dispatch(set(userData as IUser));
+      const user = await getUserData(token);
+      dispatch(set(user as Partial<IUser>));
 
       navigate("/");
     } catch (error) {
