@@ -54,42 +54,48 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Device: FC<IDevice> = (data: IDevice) => {
+const Device: FC<{ data: IDevice }> = ({ data }) => {
   const classes = useStyles();
 
-  const { id, status, createdOn, updatedOn, geoLocation } = data;
+  const { id, status, createdOn, geoLocation } = data;
   return (
-    <Paper classes={classes} style={{ padding: 10 }} elevation={3}>
-      <div><Typography variant="h6">Device</Typography></div>
-      <hr />
-      <div className={classes.row}>
-        <div className={classes.rowContent}>
-          <DevicesIcon />
-          <span className={classes.leftMargin}>ID: {id}</span>
+    <div className="w-100">
+      <Paper classes={classes} style={{ padding: 10 }} elevation={3}>
+        <div>
+          <Typography variant="h6">Device</Typography>
         </div>
-      </div>
-      <div className={classes.row}>
-        <div className={classes.rowContent}>
-          <NotificationsActiveIcon />
-          <span className={classes.leftMargin}>Status: {EStatus[status]}</span>
+        <hr />
+        <div className={classes.row}>
+          <div className={classes.rowContent}>
+            <DevicesIcon />
+            <span className={classes.leftMargin}>ID: {id}</span>
+          </div>
         </div>
-      </div>
-      <div className={classes.row}>
-        <div className={classes.rowContent}>
-          <CalendarTodayIcon />
-          <span className={classes.leftMargin}>
-            Added on: {formatDate(new Date(createdOn))}
-          </span>
+        <div className={classes.row}>
+          <div className={classes.rowContent}>
+            <NotificationsActiveIcon />
+            <span className={classes.leftMargin}>
+              Status: {EStatus[status]}
+            </span>
+          </div>
         </div>
-      </div>
-      <div className={classes.row}>
-        <div className={classes.rowContent}>
-          <LocationOnIcon />
-          <span className={classes.leftMargin}>Location: {geoLocation}</span>
+        <div className={classes.row}>
+          <div className={classes.rowContent}>
+            <CalendarTodayIcon />
+            <span className={classes.leftMargin}>
+              Added on: {formatDate(new Date(createdOn))}
+            </span>
+          </div>
         </div>
-      </div>
-      <Button variant="contained">See details</Button>
-    </Paper>
+        <div className={classes.row}>
+          <div className={classes.rowContent}>
+            <LocationOnIcon />
+            <span className={classes.leftMargin}>Location: {geoLocation}</span>
+          </div>
+        </div>
+        <Button variant="contained">See details</Button>
+      </Paper>
+    </div>
   );
 };
 

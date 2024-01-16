@@ -1,0 +1,15 @@
+.chart-wrapper {
+  width: 100%;
+  display: flex;
+}
+
+.chart {
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media screen and (max-width: 1500px) {
+  .chart-wrapper {
+    margin: auto;
+  }
+}

@@ -1,0 +1,37 @@
+.display-flex {
+  display: flex;
+}
+.m-15 {
+  margin: 15px;
+}
+.dashboard-wrapper {
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr;
+  column-gap: normal;
+}
+.device-widget {
+  /* width: 100%; */
+}
+.graph-widget {
+  display: flex;
+  min-height: 350px;
+}
+
+@media screen and (max-width: 1500px) {
+  .dashboard-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media screen and (max-width: 720px) {
+  .dashboard-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .graph-widget {
+    min-height: 0;
+  }
+}
