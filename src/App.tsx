@@ -12,6 +12,9 @@ import { getUserData, hasAuthData } from "./shared/helpers/helper";
 import { useDispatch } from "react-redux";
 import { IUser } from "./shared/models/User/IUser";
 import { set } from "./redux/user/userSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "./redux/store";
+import { CircularProgress } from "@material-ui/core";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,18 +36,22 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div style={{ height: "100dvh" }}>
       <Router>
         <Navigation />
         <Routes>
-          <Route element={<PrivateRoutes />}>
-            <Route path="/" element={<Dashboard />} />
-          </Route>
+          {useSelector((state: RootState) => state.user.id) ? (
+            <Route element={<PrivateRoutes />}>
+              <Route path="/" element={<Dashboard />} />
+            </Route>
+          ) : (
+            <Route element={<CircularProgress size={40} />} />
+          )}
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-    </>
+    </div>
   );
 }
 

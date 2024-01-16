@@ -14,7 +14,13 @@ export const options = {
   },
 };
 
-const LineGraph: FC = (data: any) => {
+//TODO napraviti neki generic tip
+export const LineGraph: FC<any> = (data: any) => {
+  console.log(data);
+  const labels = data.map((label: any) => {
+    return label.time;
+  });
+  console.log(labels);
   return <div>Test</div>;
   //     <Line
   //     options={options}

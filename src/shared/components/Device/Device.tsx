@@ -85,9 +85,7 @@ const Device: FC<IDevice> = (data: IDevice) => {
       <div className={classes.row}>
         <div className={classes.rowContent}>
           <LocationOnIcon />
-          <span className={classes.leftMargin}>
-            Location: {geoLocation}
-          </span>
+          <span className={classes.leftMargin}>Location: {geoLocation}</span>
         </div>
       </div>
       <Button variant="contained">See details</Button>

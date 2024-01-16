@@ -8,27 +8,34 @@ import { EStatus } from "../../shared/models/Base/EStatus";
 import { CircularProgress } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { LineGraph } from "../../shared/components/Graphs/LineGraph/LineGraph";
 
 const Dashboard: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   //Poslije koristiti listu uređadaj
-  const user = useSelector((state: RootState) => state.user.email);
-  
+  const user = useSelector((state: RootState) => state.user);
+
   const [device, setDevice] = useState<IDevice>({
-    id: "08afbc64-6271-4f3f-b0a2-a0aca06bdcb9",
-    status: EStatus.Active,
+    id: "",
+    geoLocation: "",
+    status: 0,
     isDeleted: false,
     createdOn: new Date(),
-    geoLocation: "Sarajevo, Bosnia and Herzegovina",
   });
+  const [readingsLastMonth, setReadingsLastMonth] = useState<any>();
 
-  const id = "fe71ce17-ac0e-11ee-98a4-18c04d2b3f68";
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get(`/device/${id}`);
-        setDevice(response.data as IDevice);
+        if (user.devices) {
+          setDevice(user.devices[0] as IDevice);
+          const readingLastMonthResponse = await axiosInstance.get(
+            `/reading/${user.devices[0].id}/month`
+          );
+          setReadingsLastMonth(readingLastMonthResponse.data as any[]); //TODO Promijeniti any
+        }
+
         setIsLoading(false);
       } catch (error) {
         throw new Error(JSON.stringify(error));
@@ -41,11 +48,9 @@ const Dashboard: FC = () => {
   }, []);
   return (
     <>
-      <div>
-
-      </div>
       {isLoading && <CircularProgress size={40} />}
       {!isLoading && <Device {...device} />}
+      <LineGraph data={readingsLastMonth as any[]} />
     </>
   );
 };
