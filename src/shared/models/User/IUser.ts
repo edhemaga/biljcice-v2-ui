@@ -8,5 +8,5 @@ export interface IUser {
     password: string;
     phone: string;
     country: string;
-    devices?: IDevice[] | Partial<IDevice>[];
+    devices: IDevice[] | Partial<IDevice>[];
 }

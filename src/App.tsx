@@ -18,11 +18,12 @@ import { CircularProgress } from "@material-ui/core";
 
 function App() {
   const dispatch = useDispatch();
+  const userId = useSelector((state: RootState) => state.user.id);
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   useEffect(() => {
     async function fetchUser() {
-      if (!isAuthenticated && hasAuthData()) {
+      if (!isAuthenticated && hasAuthData() && !userId) {
         const token = localStorage.getItem("token") ?? "";
         const user = await getUserData(token);
         dispatch(set(user as Partial<IUser>));
@@ -33,10 +34,12 @@ function App() {
     return () => {
       setIsAuthenticated(false);
     };
-  }, []);
+  }, 
+  // TODO možda staviti dependency userId
+  []);
 
   return (
-    <div style={{ height: "100dvh" }}>
+    <>
       <Router>
         <Navigation />
         <Routes>
@@ -51,7 +54,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-    </div>
+    </>
   );
 }
 

@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Device: FC<{ data: IDevice }> = ({ data }) => {
+const DeviceWidget: FC<{ data: IDevice }> = ({ data }) => {
   const classes = useStyles();
 
   const { id, status, createdOn, geoLocation } = data;
@@ -99,4 +99,4 @@ const Device: FC<{ data: IDevice }> = ({ data }) => {
   );
 };
 
-export default Device;
+export default DeviceWidget;

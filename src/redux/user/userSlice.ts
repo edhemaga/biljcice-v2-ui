@@ -6,7 +6,6 @@ const initialState: Partial<IUser> = {
     name: "",
     surname: "",
     email: "",
-    password: "",
     phone: "",
     country: "",
     devices: []

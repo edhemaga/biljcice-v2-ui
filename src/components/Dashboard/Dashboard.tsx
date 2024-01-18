@@ -9,7 +9,7 @@ import axiosInstance from "../../shared/traffic/axios";
 import { IDevice } from "../../shared/components/Device/IDevice";
 import { IReadingByMonth } from "../../shared/models/Graph/ILineGraph";
 
-import Device from "../../shared/components/Device/Device";
+import DeviceWidget from "../../shared/components/Device/DeviceWidget";
 import { LineGraph } from "../../shared/components/Graphs/LineGraph/LineGraph";
 import { CircularProgress } from "@material-ui/core";
 
@@ -57,11 +57,13 @@ const Dashboard: FC = () => {
 
     fetchData();
   }, []);
+  if (isLoading) return <CircularProgress size={40} />;
+
   return (
     <div className="dashboard-wrapper">
       {/* {isLoading && <CircularProgress size={40} />} */}
       <div className="device-widget m-15">
-        {!isLoading && <Device data={device} />}
+        {!isLoading && <DeviceWidget data={device} />}
       </div>
       <div className="graph-widget m-15">
         <LineGraph data={[...readingsLastDay]} />
