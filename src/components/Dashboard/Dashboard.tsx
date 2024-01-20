@@ -37,16 +37,22 @@ const Dashboard: FC = () => {
       <div className="device-widget m-15">
         <DeviceWidget data={device} />
       </div>
-      {!readingsLastDay.isLoading ? (
+      {/* {!readingsLastDay.isLoading ? (
         <div className="graph-widget m-15">
-          <LineGraph data={readingsLastDay.data ?? []} />
+          <LineGraph
+            title="Reading Last 24 Hours"
+            data={readingsLastDay.data ?? []}
+          />
         </div>
       ) : (
         <CircularProgress size={40} />
-      )}
+      )} */}
       {!readingsLastMonth.isLoading ? (
         <div className="graph-widget m-15">
-          <LineGraph data={readingsLastMonth.data ?? []} />
+          <LineGraph
+            title="Reading Last 30 Days"
+            data={readingsLastMonth.data ?? []}
+          />
         </div>
       ) : (
         <CircularProgress size={40} />

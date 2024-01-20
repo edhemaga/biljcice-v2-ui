@@ -1,6 +1,6 @@
 import "./LineGraph.css";
 
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { IReadingByMonth } from "../../../models/Graph/ILineGraph";
+import { generateLineGraphForReadings } from "../../../helpers/helper";
 
 ChartJS.register(
   CategoryScale,
@@ -40,27 +41,21 @@ export const options = {
 };
 
 //TODO napraviti neki generic tip
-export const LineGraph: FC<{ data: IReadingByMonth[] | any[] }> = ({
-  data,
-}) => {
-  const labels: string[] = data.map((label: IReadingByMonth) => {
-    return label.time;
-  });
-  const values: number[] = data.map((label: IReadingByMonth) => {
-    return label.value;
-  });
+export const LineGraph: FC<{
+  title: string;
+  data: IReadingByMonth[] | any[];
+}> = ({ data }) => {
+  //This was done in order to prevent unnecessary graph generation on re-render if the data was not changed
+  const { labels, items } = useMemo(
+    () => generateLineGraphForReadings(data),
+    [data]
+  );
 
   const dataForLine = {
     labels,
-    datasets: [
-      {
-        label: "Sensor 1",
-        data: values,
-        // borderColor: "rgb(255, 99, 132)",
-        // backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-    ],
+    datasets: items,
   };
+
   return (
     <div className="chart-wrapper">
       <div className="chart">

@@ -8,5 +8,10 @@ export interface ILineGraphData {
 }
 
 export interface IReadingByMonth extends ILineGraphData {
-    sensorId: string
+    sensor: string
+}
+
+export interface ILineGraphItem {
+    label: string;
+    data: number[];
 }
