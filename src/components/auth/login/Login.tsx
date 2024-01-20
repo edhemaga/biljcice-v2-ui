@@ -69,7 +69,7 @@ const Login: FC = () => {
       localStorage.setItem("token", token);
 
       const user = await getUserData(token);
-      dispatch(set(user as Partial<IUser>));
+      dispatch(set(user as IUser));
 
       navigate("/");
     } catch (error) {

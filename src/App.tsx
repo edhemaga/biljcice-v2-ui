@@ -15,28 +15,32 @@ import { set } from "./redux/user/userSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 import { CircularProgress } from "@material-ui/core";
+import Devices from "./components/Devices/Devices";
+import { useFetch } from "./shared/hooks/useFetch";
 
 function App() {
   const dispatch = useDispatch();
-  const userId = useSelector((state: RootState) => state.user.id);
+  // const userId = useSelector((state: RootState) => state.user.id);
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  useEffect(() => {
-    async function fetchUser() {
-      if (!isAuthenticated && hasAuthData() && !userId) {
-        const token = localStorage.getItem("token") ?? "";
-        const user = await getUserData(token);
-        dispatch(set(user as Partial<IUser>));
-        setIsAuthenticated(true);
+  useEffect(
+    () => {
+      async function fetchUser() {
+        if (!isAuthenticated && hasAuthData()) {
+          const token = localStorage.getItem("token") ?? "";
+          const user = await getUserData(token);
+          dispatch(set(user as IUser));
+          setIsAuthenticated(true);
+        }
       }
-    }
-    fetchUser();
-    return () => {
-      setIsAuthenticated(false);
-    };
-  }, 
-  // TODO možda staviti dependency userId
-  []);
+      fetchUser();
+      return () => {
+        setIsAuthenticated(false);
+      };
+    },
+    // TODO možda staviti dependency userId
+    []
+  );
 
   return (
     <>
@@ -46,6 +50,7 @@ function App() {
           {useSelector((state: RootState) => state.user.id) ? (
             <Route element={<PrivateRoutes />}>
               <Route path="/" element={<Dashboard />} />
+              <Route path="/devices" element={<Devices />} />
             </Route>
           ) : (
             <Route element={<CircularProgress size={40} />} />

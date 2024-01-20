@@ -7,19 +7,20 @@ import { IDevice } from "../../shared/components/Device/IDevice";
 import Device from "./Device/Device";
 
 const Devices: FC = () => {
-  const [devices, setDevices] = useState<Partial<IDevice>[]>([]);
   const deviceData = useSelector((state: RootState) => state.user.devices);
-  if (deviceData) {
-    setDevices(deviceData);
-  }
+
+  const [devices, setDevices] = useState<Partial<IDevice>[]>();
+
   let content: JSX.Element = <></>;
 
   useEffect(() => {
-    if (devices?.length === 1) content = <Device data={}></Device>;
-  }, [devices]);
+    if (deviceData) {
+      setDevices(deviceData);
+    }
+    // if (devices?.length === 1) content = <Device data={}></Device>;
+  }, [deviceData]);
 
-  content = <div></div>;
-  return content;
+  return <div>{devices ? <Device props={devices[0]} /> : null}</div>;
 };
 
 export default Devices;

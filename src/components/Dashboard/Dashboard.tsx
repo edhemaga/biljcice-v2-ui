@@ -1,10 +1,10 @@
 import "./Dashboard.css";
+
 import { FC, useEffect, useState } from "react";
+import { useFetch } from "../../shared/hooks/useFetch";
 
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-
-import axiosInstance from "../../shared/traffic/axios";
 
 import { IDevice } from "../../shared/components/Device/IDevice";
 import { IReadingByMonth } from "../../shared/models/Graph/ILineGraph";
@@ -14,63 +14,43 @@ import { LineGraph } from "../../shared/components/Graphs/LineGraph/LineGraph";
 import { CircularProgress } from "@material-ui/core";
 
 const Dashboard: FC = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
+  //Use memo ili use callback
   const user = useSelector((state: RootState) => state.user);
 
   const [device, setDevice] = useState<IDevice>({
-    id: "",
-    geoLocation: "",
-    status: 0,
+    id: user.devices[0].id ?? "",
+    geoLocation: user.devices[0].geoLocation ?? "",
+    status: user.devices[0].status ?? 0,
     isDeleted: false,
-    createdOn: new Date(),
+    createdOn: user.devices[0].createdOn ?? new Date(),
   });
-  const [readingsLastMonth, setReadingsLastMonth] = useState<IReadingByMonth[]>(
-    []
+
+  const readingsLastMonth = useFetch<IReadingByMonth[]>(
+    `/reading/${user.devices[0].id}/month`
   );
-  const [readingsLastDay, setReadingsLastDay] = useState<IReadingByMonth[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (user?.devices) {
-          setDevice(user.devices[0] as IDevice);
-          const readingLastMonthResponse = await axiosInstance.get(
-            `/reading/${user.devices[0].id}/month`
-          );
-          setReadingsLastMonth(
-            readingLastMonthResponse.data as IReadingByMonth[]
-          );
-          const readingsLastDayResponse = await axiosInstance.get(
-            `/reading/${user.devices[0].id}/day`
-          );
-          setReadingsLastDay(readingsLastDayResponse.data as IReadingByMonth[]);
-        }
-
-        setIsLoading(false);
-      } catch (error) {
-        throw new Error(JSON.stringify(error));
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-  if (isLoading) return <CircularProgress size={40} />;
-
+  const readingsLastDay = useFetch<IReadingByMonth[]>(
+    `/reading/${user.devices[0].id}/day`
+  );
   return (
     <div className="dashboard-wrapper">
       {/* {isLoading && <CircularProgress size={40} />} */}
       <div className="device-widget m-15">
-        {!isLoading && <DeviceWidget data={device} />}
+        <DeviceWidget data={device} />
       </div>
-      <div className="graph-widget m-15">
-        <LineGraph data={[...readingsLastDay]} />
-      </div>
-      <div className="graph-widget m-15">
-        <LineGraph data={[...readingsLastMonth]} />
-      </div>
+      {!readingsLastDay.isLoading ? (
+        <div className="graph-widget m-15">
+          <LineGraph data={readingsLastDay.data ?? []} />
+        </div>
+      ) : (
+        <CircularProgress size={40} />
+      )}
+      {!readingsLastMonth.isLoading ? (
+        <div className="graph-widget m-15">
+          <LineGraph data={readingsLastMonth.data ?? []} />
+        </div>
+      ) : (
+        <CircularProgress size={40} />
+      )}
     </div>
   );
 };

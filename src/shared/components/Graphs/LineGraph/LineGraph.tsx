@@ -40,7 +40,9 @@ export const options = {
 };
 
 //TODO napraviti neki generic tip
-export const LineGraph: FC<{ data: IReadingByMonth[] }> = ({ data }) => {
+export const LineGraph: FC<{ data: IReadingByMonth[] | any[] }> = ({
+  data,
+}) => {
   const labels: string[] = data.map((label: IReadingByMonth) => {
     return label.time;
   });

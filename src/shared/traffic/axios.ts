@@ -9,6 +9,7 @@ const axiosInstance = axios.create({
     //baseURL: process.env.HOST
 })
 
+
 axiosInstance.interceptors.request.use(
     (config: AxiosRequestConfig): any => {
         const token = localStorage.getItem("token");
@@ -24,7 +25,6 @@ axiosInstance.interceptors.request.use(
 axios.interceptors.response.use(
     (response: AxiosResponse) => {
         if (response.status === 401) {
-            //Add 401 logic
             console.log(response.statusText)
         };
         return response;

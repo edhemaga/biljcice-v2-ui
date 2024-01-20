@@ -6,7 +6,7 @@ import { AppBar, Toolbar, Button, makeStyles } from "@material-ui/core";
 //Hooks
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { set } from "../../redux/user/userSlice";
+import { reset, set } from "../../redux/user/userSlice";
 
 // Custom styles using makeStyles
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +26,7 @@ const Navigation: FC = () => {
 
   const logout = (): void => {
     localStorage.setItem("token", "");
-    dispatch(set({}));
+    dispatch(reset());
     navigate("/login");
   };
   const classes = useStyles();
@@ -34,7 +34,14 @@ const Navigation: FC = () => {
   return (
     <AppBar position="static" className={classes.appBar}>
       <Toolbar>
-        {/* You can add other navbar items here if needed */}
+        <Button
+          color="inherit"
+          onClick={() => {
+            navigate("/devices");
+          }}
+        >
+          Devices
+        </Button>
         <Button
           color="inherit"
           className={classes.logoutButton}

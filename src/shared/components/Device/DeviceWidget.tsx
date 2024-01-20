@@ -11,7 +11,7 @@ import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 
-//Izbaciti u drugi fajl
+//TODO Izbaciti u drugi fajl
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(3),
@@ -54,10 +54,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DeviceWidget: FC<{ data: IDevice }> = ({ data }) => {
+const DeviceWidget: FC<{ data: Partial<IDevice> }> = ({ data }) => {
   const classes = useStyles();
 
   const { id, status, createdOn, geoLocation } = data;
+  if ((id || status || createdOn || geoLocation) == null) return <></>;
   return (
     <div className="w-100">
       <Paper classes={classes} style={{ padding: 10 }} elevation={3}>
@@ -75,7 +76,7 @@ const DeviceWidget: FC<{ data: IDevice }> = ({ data }) => {
           <div className={classes.rowContent}>
             <NotificationsActiveIcon />
             <span className={classes.leftMargin}>
-              Status: {EStatus[status]}
+              Status: {EStatus[status ?? 0]}
             </span>
           </div>
         </div>
@@ -83,7 +84,7 @@ const DeviceWidget: FC<{ data: IDevice }> = ({ data }) => {
           <div className={classes.rowContent}>
             <CalendarTodayIcon />
             <span className={classes.leftMargin}>
-              Added on: {formatDate(new Date(createdOn))}
+              Added on: {formatDate(new Date(createdOn ?? ""))}
             </span>
           </div>
         </div>
