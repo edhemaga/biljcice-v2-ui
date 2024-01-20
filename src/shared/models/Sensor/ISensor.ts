@@ -1,7 +1,7 @@
 import { IBaseClass } from "../Base/IBaseClass";
 import { ESensorType } from "./ESensorType";
 
-export interface ISensor extends IBaseClass{
+export interface ISensor extends IBaseClass {
     name: string;
     manufacturer?: string;
     price?: number;
@@ -12,4 +12,12 @@ export interface ISensor extends IBaseClass{
     high: number;
     low: number;
     deviceId?: string;
+}
+
+
+export interface ISensorConfig {
+    name: string;
+    manufacturer: string;
+    high: number;
+    low: number
 }

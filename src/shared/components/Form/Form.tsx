@@ -1,4 +1,9 @@
-import React, { forwardRef, useImperativeHandle, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
 import { IFormConfig, IFormField } from "./IForm";
 import {
   Button,
@@ -16,6 +21,10 @@ interface IProps {
 const Form = forwardRef(
   ({ config, passData }: IProps, ref: any): JSX.Element => {
     const [data, setData] = useState<Object>(config.state);
+
+    useEffect(() => {
+      setData(config.state);
+    }, [config.state]);
 
     useImperativeHandle(ref, () => ({
       refresh(): void {
@@ -49,6 +58,22 @@ const Form = forwardRef(
                 required={field.required || false}
                 label={field.placeholder}
                 onChange={handleChange}
+                value={Object(data)[field.id]}
+                //   error={Object(data)[field.id] == "" ? true : false}
+              />
+            </FormControl>
+          );
+          break;
+        case "Number":
+          element = (
+            <FormControl style={initializeStyles(field)}>
+              <TextField
+                //   defaultValue={Object(data)[field.id]}
+                key={field.id}
+                required={field.required || false}
+                label={field.placeholder}
+                onChange={handleChange}
+                type="number"
                 value={Object(data)[field.id]}
                 //   error={Object(data)[field.id] == "" ? true : false}
               />

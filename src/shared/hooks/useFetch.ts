@@ -22,6 +22,7 @@ export function useFetch<T>(url: string, params?: Object) {
             }
         }
         fetchData();
+        return () => { };
     }, [url])
     return { isLoading, data, error };
 }

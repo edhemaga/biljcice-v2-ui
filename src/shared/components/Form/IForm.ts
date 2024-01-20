@@ -1,6 +1,6 @@
 export interface IFormField {
     id: string;
-    type: "Text" | "TextArea" | "Password" | "Checkbox" | "Button";
+    type: "Text" | "TextArea" | "Number" | "Password" | "Checkbox" | "Button";
     placeholder: string;
     required?: boolean;
     spacing?: number;
