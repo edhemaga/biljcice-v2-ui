@@ -1,5 +1,5 @@
 .device-wrapper {
-  margin: 15px;
+  margin: 50px 15px;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
 }
@@ -9,6 +9,6 @@
 }
 
 .table-wrapper {
-  height: 400;
-  width: "fit-content";
+  height: fit-content;
+  width: 100%;
 }

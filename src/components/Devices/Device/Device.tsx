@@ -1,46 +1,52 @@
 import "./Device.css";
 
 import { FC, useRef, useState } from "react";
+import { useFetch } from "../../../shared/hooks/useFetch";
 
+import axiosInstance from "../../../shared/traffic/axios";
+
+import Form from "../../../shared/components/Form/Form";
 import DeviceWidget from "../../../shared/components/Device/DeviceWidget";
+
+import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
+import { CircularProgress, FormControl, InputLabel, MenuItem } from "@material-ui/core";
 
 import { IDevice } from "../../../shared/components/Device/IDevice";
 import { ISensor, ISensorConfig } from "../../../shared/models/Sensor/ISensor";
-import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
-import { useFetch } from "../../../shared/hooks/useFetch";
-import { CircularProgress } from "@material-ui/core";
 import { IFormConfig } from "../../../shared/components/Form/IForm";
-import Form from "../../../shared/components/Form/Form";
 import { TRefreshFunction } from "../../../shared/models/TRefreshFunction";
-import axiosInstance from "../../../shared/traffic/axios";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 90 },
+  // { field: "id", headerName: "ID", width: 90 },
   //TODO Možda za kasnije implementirati da se vrijednost može urediti i klikom na tabelu
   {
     field: "name",
     headerName: "Name",
-    width: 150,
+    flex: 2,
+    align: "left",
     //editable: true,
   },
   {
     field: "manufacturer",
     headerName: "Manufacturer",
-    width: 150,
+    flex: 2,
+    align: "left",
     //editable: true,
   },
   {
     field: "high",
     headerName: "High",
-    type: "number",
-    width: 110,
+    // type: "number",
+    flex: 1,
+    align: "left",
     //editable: true,
   },
   {
     field: "low",
     headerName: "Low",
-    type: "number",
-    width: 110,
+    // type: "number",
+    flex: 1,
+    align: "left",
     //editable: true,
   },
 ];
@@ -112,15 +118,27 @@ const Device: FC<{ props: Partial<IDevice> }> = ({ props }) => {
   const { data, isLoading, error } = useFetch<ISensor[]>("/sensor", params);
 
   const passData = async (formData: ISensorConfig): Promise<void> => {
-    if (formData.high < 0 || formData.low < 0) {
-      return;
-    }
-    await axiosInstance.put(`/sensor/${selectedSensorId}/config`, formData);
+    try {
+      if (formData.high < 0 || formData.low < 0) {
+        return;
+      }
+      await axiosInstance.put(`/sensor/${selectedSensorId}/config`, formData);
+      const updatedSensorResponse = await axiosInstance.get(`/sensor`, {
+        params,
+      });
+      setUpdatedData(updatedSensorResponse.data as ISensor[]);
+      setSensorConfig({
+        ...sensorConfig,
+        state: {
+          name: "",
+          manufacturer: "",
+          high: 0,
+          low: 0,
+        },
+      });
 
-    const updatedSensorResponse = await axiosInstance.get(`/sensor`, {
-      params,
-    });
-    setUpdatedData(updatedSensorResponse.data as ISensor[]);
+      form.current?.refresh();
+    } catch {}
   };
 
   const handleRowClick: GridEventListener<"rowClick"> = (params) => {
@@ -134,27 +152,32 @@ const Device: FC<{ props: Partial<IDevice> }> = ({ props }) => {
     setSensorConfig({ ...sensorConfig, state: selectedSensor });
   };
 
+
+
   if (error) return <div>An error has occured!</div>;
   return (
-    <div className="device-wrapper">
-      <div className="device-widget-wrapper">
-        <DeviceWidget data={props} />
+    <>
+
+      <div className="device-wrapper">
+        <div className="device-widget-wrapper">
+          <DeviceWidget data={props} />
+        </div>
+        <div className="table-wrapper">
+          {!isLoading ? (
+            <DataGrid
+              onRowClick={handleRowClick}
+              rows={updatedData || data || []}
+              columns={columns}
+            />
+          ) : (
+            <CircularProgress size={40} />
+          )}
+        </div>
+        <div className="sensor-form-wrapper">
+          <Form ref={form} config={sensorConfig} passData={passData}></Form>
+        </div>
       </div>
-      <div className="table-wrapper">
-        {!isLoading ? (
-          <DataGrid
-            onRowClick={handleRowClick}
-            rows={updatedData || data || []}
-            columns={columns}
-          />
-        ) : (
-          <CircularProgress size={40} />
-        )}
-      </div>
-      <div className="sensor-form-wrapper">
-        <Form ref={form} config={sensorConfig} passData={passData}></Form>
-      </div>
-    </div>
+    </>
   );
 };
 

@@ -4,7 +4,7 @@ import axiosInstance from "../traffic/axios"
 
 export function useFetch<T>(url: string, params?: Object) {
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [data, setData] = useState<T>();
+    const [data, setData] = useState<T | undefined>();
     const [error, setError] = useState<string>();
 
     useEffect(() => {
@@ -22,7 +22,11 @@ export function useFetch<T>(url: string, params?: Object) {
             }
         }
         fetchData();
-        return () => { };
+        return () => {
+            setIsLoading(true);
+            setData(undefined);
+            setError("");
+        };
     }, [url])
     return { isLoading, data, error };
 }

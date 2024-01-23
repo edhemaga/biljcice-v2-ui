@@ -44,6 +44,22 @@ const Navigation: FC = () => {
         </Button>
         <Button
           color="inherit"
+          onClick={() => {
+            navigate("/readings");
+          }}
+        >
+          Readings
+        </Button>
+        <Button
+          color="inherit"
+          onClick={() => {
+            navigate("/alerts");
+          }}
+        >
+          Alerts
+        </Button>
+        <Button
+          color="inherit"
           className={classes.logoutButton}
           onClick={logout}
         >

@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
     maxWidth: 400,
     margin: "auto",
-    marginTop: theme.spacing(4),
+    marginTop: 0,
     position: "relative",
     textAlign: "left", // Align text to the left
   },
