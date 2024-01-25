@@ -6,6 +6,7 @@ export interface IFormField {
     spacing?: number;
     fullWidth?: boolean;
     dependsOn?: string;
+    touched: boolean;
 }
 export interface IFormConfig<T> {
     title: string;

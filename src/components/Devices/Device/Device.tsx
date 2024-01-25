@@ -70,6 +70,7 @@ const Device: FC<{ props: Partial<IDevice> }> = ({ props }) => {
         required: true,
         spacing: 10,
         fullWidth: true,
+        touched: false,
       },
       {
         id: "manufacturer",
@@ -78,6 +79,7 @@ const Device: FC<{ props: Partial<IDevice> }> = ({ props }) => {
         required: true,
         spacing: 10,
         fullWidth: true,
+        touched: false,
       },
       {
         id: "high",
@@ -86,6 +88,7 @@ const Device: FC<{ props: Partial<IDevice> }> = ({ props }) => {
         required: true,
         spacing: 10,
         fullWidth: true,
+        touched: false,
       },
       {
         id: "low",
@@ -94,6 +97,7 @@ const Device: FC<{ props: Partial<IDevice> }> = ({ props }) => {
         required: true,
         spacing: 10,
         fullWidth: true,
+        touched: false,
       },
       {
         id: "submit",
@@ -101,6 +105,7 @@ const Device: FC<{ props: Partial<IDevice> }> = ({ props }) => {
         placeholder: "Save",
         spacing: 10,
         fullWidth: true,
+        touched: false,
       },
     ],
   });

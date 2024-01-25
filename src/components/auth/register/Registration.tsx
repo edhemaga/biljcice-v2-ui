@@ -32,6 +32,7 @@ const Registration: FC = () => {
         required: true,
         spacing: 10,
         fullWidth: true,
+        touched: false,
       },
       {
         id: "surname",
@@ -40,6 +41,7 @@ const Registration: FC = () => {
         required: true,
         spacing: 10,
         fullWidth: true,
+        touched: false,
       },
       {
         id: "email",
@@ -48,6 +50,7 @@ const Registration: FC = () => {
         required: true,
         spacing: 10,
         fullWidth: true,
+        touched: false,
       },
       {
         id: "password",
@@ -56,6 +59,7 @@ const Registration: FC = () => {
         required: true,
         spacing: 10,
         fullWidth: true,
+        touched: false,
       },
       {
         id: "confirmPassword",
@@ -64,6 +68,7 @@ const Registration: FC = () => {
         required: true,
         spacing: 10,
         fullWidth: true,
+        touched: false,
       },
       {
         id: "phone",
@@ -72,6 +77,7 @@ const Registration: FC = () => {
         required: true,
         spacing: 10,
         fullWidth: true,
+        touched: false,
       },
       {
         id: "country",
@@ -80,6 +86,7 @@ const Registration: FC = () => {
         required: true,
         spacing: 10,
         fullWidth: true,
+        touched: false,
       },
       {
         id: "submit",
@@ -87,6 +94,7 @@ const Registration: FC = () => {
         placeholder: "Register",
         spacing: 10,
         fullWidth: true,
+        touched: false,
       },
     ],
   };

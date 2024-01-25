@@ -81,7 +81,7 @@ const Alerts: FC = () => {
 
   const alerts = useFetch<IBaseResposne<IAlertExtended[]>>(
     `/alert`,
-    
+    device
   );
 
   const alertsBySeverityLastDay = useFetch<IAlertBySeverity[]>(

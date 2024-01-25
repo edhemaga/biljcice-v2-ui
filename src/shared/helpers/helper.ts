@@ -34,36 +34,40 @@ export const hasAuthData = (): boolean => {
 }
 
 export const getUserData = async (token: string): Promise<Partial<IUser>> => {
-
-    const claims: IJwtClaims = jwtDecode(token);
-    if (!claims.id) return {};
-    const response = await axiosInstance.get(`/user/${claims.id}`);
-    let userData: Partial<IUser> =
-    {
-        id: claims.id,
-        name: response.data?.name,
-        surname: response.data?.surname,
-        email: response.data?.email,
-        phone: response.data?.phone,
-        country: response.data?.country,
-        devices: response.data?.devices
-    };
-    // let userData: Partial<IUser> =
-    // {
-    //     id: claims.id,
-    //     name: "Edim",
-    //     surname: "Hadzic",
-    //     email: "edimhadzic98@gmail.com",
-    //     phone: "387603148500",
-    //     country: "Bosnia and Herzegovina",
-    //     devices: [{
-    //         id: "425ab0eb-d694-4f79-9e4f-990aa588442b",
-    //         status: 1,
-    //         createdOn: new Date(),
-    //         geoLocation: 'Sarajevo'
-    //     }]
-    // };
-    return userData;
+    try {
+        const claims: IJwtClaims = jwtDecode(token);
+        if (!claims.id) return {};
+        // const response = await axiosInstance.get(`/user/${claims.id}`);
+        // let userData: Partial<IUser> =
+        // {
+        //     id: claims.id,
+        //     name: response.data?.name,
+        //     surname: response.data?.surname,
+        //     email: response.data?.email,
+        //     phone: response.data?.phone,
+        //     country: response.data?.country,
+        //     devices: response.data?.devices
+        // };
+        let userData: Partial<IUser> =
+        {
+            id: claims.id,
+            name: "Edim",
+            surname: "Hadzic",
+            email: "edimhadzic98@gmail.com",
+            phone: "387603148500",
+            country: "Bosnia and Herzegovina",
+            devices: [{
+                id: "425ab0eb-d694-4f79-9e4f-990aa588442b",
+                status: 1,
+                createdOn: new Date(),
+                geoLocation: 'Sarajevo'
+            }]
+        };
+        return userData;
+    }
+    catch (error) {
+        throw new Error(String(error));
+    }
 }
 
 export const generateLineGraphForReadings = (data: IReadingByMonth[]) => {

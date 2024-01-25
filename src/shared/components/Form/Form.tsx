@@ -20,7 +20,9 @@ interface IProps {
 }
 const Form = forwardRef(
   ({ config, passData }: IProps, ref: any): JSX.Element => {
+    const [fields, setFields] = useState<IFormField[]>(config.fields);
     const [data, setData] = useState<Object>(config.state);
+    const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
     useEffect(() => {
       setData(config.state);
@@ -39,6 +41,19 @@ const Form = forwardRef(
       };
     };
 
+
+    const sendData = (): void => {
+      setIsFormValid(true);
+      for (const [key, value] of Object.entries(data)) {
+        if (value === '' || value === 0) {
+          setIsFormValid(false)
+        };
+      }
+
+      if (isFormValid)
+        passData(data);
+    }
+
     const generateField = (field: IFormField): JSX.Element => {
       let element: JSX.Element = <div></div>;
 
@@ -48,18 +63,33 @@ const Form = forwardRef(
         setData({ ...(data as Object), [field.id]: e.target.value });
       };
 
+      const handleTouch = (
+        e: any
+      ): void => {
+        if (!field.touched) {
+          const fieldsModified = fields.map((arg) => {
+            if (arg.id === field.id) {
+              arg.touched = true;
+            }
+            return arg;
+          });
+          setFields(fieldsModified);
+        }
+
+      };
+
       switch (field.type) {
         case "Text":
           element = (
             <FormControl style={initializeStyles(field)}>
               <TextField
-                //   defaultValue={Object(data)[field.id]}
                 key={field.id}
                 required={field.required || false}
                 label={field.placeholder}
+                onClick={handleTouch}
                 onChange={handleChange}
                 value={Object(data)[field.id]}
-                //   error={Object(data)[field.id] == "" ? true : false}
+                error={field.touched && !Object(data)[field.id]}
               />
             </FormControl>
           );
@@ -68,14 +98,12 @@ const Form = forwardRef(
           element = (
             <FormControl style={initializeStyles(field)}>
               <TextField
-                //   defaultValue={Object(data)[field.id]}
                 key={field.id}
                 required={field.required || false}
                 label={field.placeholder}
                 onChange={handleChange}
                 type="number"
                 value={Object(data)[field.id]}
-                //   error={Object(data)[field.id] == "" ? true : false}
               />
             </FormControl>
           );
@@ -88,8 +116,9 @@ const Form = forwardRef(
                 label={field.placeholder}
                 multiline
                 rows={5}
+                onClick={handleTouch}
                 onChange={handleChange}
-                // error={Object(data)[field.id] == null ? true : false}
+                error={field.touched && !Object(data)[field.id]}
               />
             </FormControl>
           );
@@ -101,9 +130,10 @@ const Form = forwardRef(
                 required={field.required || false}
                 type="password"
                 label={field.placeholder}
+                onClick={handleTouch}
                 onChange={handleChange}
                 value={Object(data)[field.id]}
-                error={Object(data)[field.id] == null ? true : false}
+                error={field.touched && !Object(data)[field.id]}
               />
             </FormControl>
           );
@@ -122,7 +152,7 @@ const Form = forwardRef(
         case "Button":
           element = (
             <Button
-              onClick={() => passData(data)}
+              onClick={() => sendData()}
               style={initializeStyles(field)}
               variant="contained"
             >
@@ -142,7 +172,7 @@ const Form = forwardRef(
           {config.title}
           <hr></hr>
         </div>
-        {config.fields.map((field, indx) => {
+        {fields.map((field, indx) => {
           return <div key={String(indx)}>{generateField(field)}</div>;
         })}
       </Container>

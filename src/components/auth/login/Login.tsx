@@ -15,7 +15,6 @@ import axiosInstance from "../../../shared/traffic/axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { set } from "../../../redux/user/userSlice";
-import { IDevice } from "../../../shared/components/Device/IDevice";
 import { jwtDecode } from "jwt-decode";
 import { getUserData } from "../../../shared/helpers/helper";
 
@@ -39,6 +38,7 @@ const Login: FC = () => {
         required: true,
         spacing: 10,
         fullWidth: true,
+        touched: false,
       },
       {
         id: "password",
@@ -47,6 +47,7 @@ const Login: FC = () => {
         required: true,
         spacing: 10,
         fullWidth: true,
+        touched: false,
       },
       {
         id: "submit",
@@ -54,6 +55,7 @@ const Login: FC = () => {
         placeholder: "Login",
         spacing: 10,
         fullWidth: true,
+        touched: false,
       },
     ],
   };
