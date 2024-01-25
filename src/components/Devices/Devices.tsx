@@ -1,3 +1,5 @@
+import "./Devices.css";
+
 import { FC, useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +19,6 @@ const Devices: FC = () => {
   const [selectedDevice, setSelectedDevice] = useState<string>();
 
   const handleChange = (event: SelectChangeEvent) => {
-    console.log(event.target.value);
     setSelectedDevice(event.target.value);
   };
 
@@ -30,22 +31,24 @@ const Devices: FC = () => {
 
   return (
     <div>
-      <InputLabel id="demo-simple-select-autowidth-label">Device</InputLabel>
-      <Select
-        labelId="demo-simple-select-autowidth-label"
-        id="demo-simple-select-autowidth"
-        value={selectedDevice}
-        onChange={handleChange}
-        autoWidth
-        label="Age"
-      >
-        {/* <MenuItem value="">
+      <div className="device-select-wrapper">
+        <InputLabel id="demo-simple-select-autowidth-label">Device</InputLabel>
+        <Select
+          labelId="demo-simple-select-autowidth-label"
+          id="demo-simple-select-autowidth"
+          value={selectedDevice}
+          onChange={handleChange}
+          autoWidth
+          label="Age"
+        >
+          {/* <MenuItem value="">
           <em>None</em> */}
-        {devices?.map((device) => {
-          //TODO zamijneiti placeholder sa device name
-          return <MenuItem value={device.id}>{device.id}</MenuItem>;
-        })}
-      </Select>
+          {devices?.map((device) => {
+            //TODO zamijneiti placeholder sa device name
+            return <MenuItem value={device.id}>{device.id}</MenuItem>;
+          })}
+        </Select>
+      </div>
       {devices ? <Device props={devices[0]} /> : null}
     </div>
   );

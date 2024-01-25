@@ -1,6 +1,6 @@
 import "./Dashboard.css";
 
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { useFetch } from "../../shared/hooks/useFetch";
 
 import { useSelector } from "react-redux";
@@ -37,7 +37,7 @@ const Dashboard: FC = () => {
       <div className="device-widget m-15">
         <DeviceWidget data={device} />
       </div>
-      {/* {!readingsLastDay.isLoading ? (
+      {!readingsLastDay.isLoading ? (
         <div className="graph-widget m-15">
           <LineGraph
             title="Reading Last 24 Hours"
@@ -46,7 +46,7 @@ const Dashboard: FC = () => {
         </div>
       ) : (
         <CircularProgress size={40} />
-      )} */}
+      )}
       {!readingsLastMonth.isLoading ? (
         <div className="graph-widget m-15">
           <LineGraph

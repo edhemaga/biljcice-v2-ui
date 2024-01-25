@@ -52,20 +52,22 @@ function App() {
         {useSelector((state: RootState) => state.user.id) ? (
           <Navigation />
         ) : null}
-        <Routes>
-          {useSelector((state: RootState) => state.user.id) ? (
-            <Route element={<PrivateRoutes />}>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/devices" element={<Devices />} />
-              <Route path="/readings" element={<Readings />} />
-              <Route path="/alerts" element={<Alerts />} />
-            </Route>
-          ) : (
-            <Route element={<CircularProgress size={40} />} />
-          )}
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <div className="app-wrapper">
+          <Routes>
+            {useSelector((state: RootState) => state.user.id) ? (
+              <Route element={<PrivateRoutes />}>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/devices" element={<Devices />} />
+                <Route path="/readings" element={<Readings />} />
+                <Route path="/alerts" element={<Alerts />} />
+              </Route>
+            ) : (
+              <Route element={<CircularProgress size={40} />} />
+            )}
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
       </Router>
     </>
   );

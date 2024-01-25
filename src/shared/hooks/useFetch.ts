@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import axiosInstance from "../traffic/axios"
 
@@ -27,6 +27,6 @@ export function useFetch<T>(url: string, params?: Object) {
             setData(undefined);
             setError("");
         };
-    }, [url])
+    }, [url, params])
     return { isLoading, data, error };
 }

@@ -1,5 +1,5 @@
 .device-wrapper {
-  margin: 50px 15px;
+  /* margin: 50px 15px; */
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
 }

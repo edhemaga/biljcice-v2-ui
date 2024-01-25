@@ -37,6 +37,14 @@ const Navigation: FC = () => {
         <Button
           color="inherit"
           onClick={() => {
+            navigate("/");
+          }}
+        >
+          Home
+        </Button>
+        <Button
+          color="inherit"
+          onClick={() => {
             navigate("/devices");
           }}
         >

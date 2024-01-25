@@ -9,7 +9,7 @@ import Form from "../../../shared/components/Form/Form";
 import DeviceWidget from "../../../shared/components/Device/DeviceWidget";
 
 import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
-import { CircularProgress, FormControl, InputLabel, MenuItem } from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
 
 import { IDevice } from "../../../shared/components/Device/IDevice";
 import { ISensor, ISensorConfig } from "../../../shared/models/Sensor/ISensor";
@@ -107,13 +107,13 @@ const Device: FC<{ props: Partial<IDevice> }> = ({ props }) => {
 
   const [updatedData, setUpdatedData] = useState<ISensor[]>();
 
-  const form = useRef<TRefreshFunction>(null);
-
-  const params = {
+  const [params, setParams] = useState({
     page: 0,
     size: 10,
     device: props.id,
-  };
+  });
+
+  const form = useRef<TRefreshFunction>(null);
 
   const { data, isLoading, error } = useFetch<ISensor[]>("/sensor", params);
 
@@ -152,12 +152,9 @@ const Device: FC<{ props: Partial<IDevice> }> = ({ props }) => {
     setSensorConfig({ ...sensorConfig, state: selectedSensor });
   };
 
-
-
   if (error) return <div>An error has occured!</div>;
   return (
     <>
-
       <div className="device-wrapper">
         <div className="device-widget-wrapper">
           <DeviceWidget data={props} />
@@ -165,7 +162,7 @@ const Device: FC<{ props: Partial<IDevice> }> = ({ props }) => {
         <div className="table-wrapper">
           {!isLoading ? (
             <DataGrid
-              onRowClick={handleRowClick}
+              onRowClick={() => handleRowClick}
               rows={updatedData || data || []}
               columns={columns}
             />
