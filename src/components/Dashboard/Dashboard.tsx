@@ -26,10 +26,12 @@ const Dashboard: FC = () => {
   });
 
   const readingsLastMonth = useFetch<IReadingByMonth[]>(
-    `/reading/${user.devices[0].id}/month`
+    `/reading/${user.devices[0].id}/month`,
+    null
   );
   const readingsLastDay = useFetch<IReadingByMonth[]>(
-    `/reading/${user.devices[0].id}/day`
+    `/reading/${user.devices[0].id}/day`,
+    null
   );
   return (
     <div className="dashboard-wrapper">
@@ -41,7 +43,7 @@ const Dashboard: FC = () => {
         <div className="graph-widget m-15">
           <LineGraph
             title="Reading Last 24 Hours"
-            data={readingsLastDay.data ?? []}
+            dataProps={readingsLastDay}
           />
         </div>
       ) : (
@@ -51,7 +53,7 @@ const Dashboard: FC = () => {
         <div className="graph-widget m-15">
           <LineGraph
             title="Reading Last 30 Days"
-            data={readingsLastMonth.data ?? []}
+            dataProps={readingsLastMonth}
           />
         </div>
       ) : (

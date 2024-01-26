@@ -71,27 +71,30 @@ const columns: GridColDef[] = [
 const Alerts: FC = () => {
   const devices = useSelector((state: RootState) => state.user.devices);
 
-  // const [device, setDevice] = use;
-
   const [device, setDevice] = useState({ device: devices[0].id });
   const [params, setParams] = useState({
     page: 0,
     size: 10,
   });
 
-  const alerts = useFetch<IBaseResposne<IAlertExtended[]>>(
-    `/alert`,
-    device
-  );
+  const alerts = useFetch<IBaseResposne<IAlertExtended[]>>(`/alert`, {
+    ...device,
+    ...params,
+  });
 
   const alertsBySeverityLastDay = useFetch<IAlertBySeverity[]>(
     "/alert/day",
+    null,
     device
   );
-  const alertsBySeverity = useFetch<IAlertBySeverity[]>("/alert/all", device);
+  const alertsBySeverity = useFetch<IAlertBySeverity[]>(
+    "/alert/all",
+    null,
+    device
+  );
 
-  if (alerts.isLoading) return <CircularProgress size={40} />;
-  if (alerts.error) return <Error />;
+  // if (alerts.isLoading) return <CircularProgress size={40} />;
+  // if (alerts.error) return <Error />;
 
   return (
     <div className="alerts-wrapper">
@@ -131,12 +134,9 @@ const Alerts: FC = () => {
       <div className="pie-charts">
         <PieChart
           title="Alerts Last 24 Hours"
-          data={alertsBySeverityLastDay.data ?? []}
+          dataProps={alertsBySeverityLastDay}
         />
-        <PieChart
-          title="Alerts Last 24 Hours"
-          data={alertsBySeverity.data ?? []}
-        />
+        <PieChart title="Alerts Last 24 Hours" dataProps={alertsBySeverity} />
       </div>
     </div>
   );

@@ -3,9 +3,10 @@
   display: flex;
 }
 
-.chart {
+.pie-chart {
+  max-height: 300px;
+  max-width: 300px;
   margin: 0 auto;
-  width: 100%;
 }
 
 @media screen and (max-width: 1500px) {

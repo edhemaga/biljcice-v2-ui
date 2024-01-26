@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 
-import axiosInstance from "../traffic/axios"
+import axiosInstance from "../traffic/axios";
 
-export function useFetch<T>(url: string, params?: Object) {
+import { IPagination } from "../models/Base/IPagination";
+
+export function useFetch<T>(url: string, pagination: IPagination | null, params?: Object) {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [data, setData] = useState<T | undefined>();
     const [error, setError] = useState<string>();
@@ -10,7 +12,12 @@ export function useFetch<T>(url: string, params?: Object) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axiosInstance.get<T>(url, { params });
+                const response = await axiosInstance.get<T>(url, {
+                    params:
+                    {
+                        ...pagination, ...params
+                    }
+                });
                 if (response.status !== 200) throw new Error(response.statusText);
                 setData(response.data);
             }
@@ -27,6 +34,6 @@ export function useFetch<T>(url: string, params?: Object) {
             setData(undefined);
             setError("");
         };
-    }, [url, params])
+    }, [url, pagination?.page, pagination?.size])
     return { isLoading, data, error };
 }
