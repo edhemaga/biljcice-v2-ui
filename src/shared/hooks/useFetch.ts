@@ -4,7 +4,8 @@ import axiosInstance from "../traffic/axios";
 
 import { IPagination } from "../models/Base/IPagination";
 
-export function useFetch<T>(url: string, pagination: IPagination | null, params?: Object) {
+//TODO možda izbaciti ovu paginaciju ili parametre i sve završavati na nivou url-a
+export function useFetch<T>(url: string, pagination?: IPagination | null) {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [data, setData] = useState<T | undefined>();
     const [error, setError] = useState<string>();
@@ -15,7 +16,7 @@ export function useFetch<T>(url: string, pagination: IPagination | null, params?
                 const response = await axiosInstance.get<T>(url, {
                     params:
                     {
-                        ...pagination, ...params
+                        ...pagination,
                     }
                 });
                 if (response.status !== 200) throw new Error(response.statusText);

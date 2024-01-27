@@ -14,5 +14,13 @@ code {
 }
 
 .app-wrapper {
-  margin: 35px 15px;
+  margin: 50px;
+}
+
+.table-wrapper {
+  width: 100%;
+}
+
+.centered-text {
+  margin: auto;
 }

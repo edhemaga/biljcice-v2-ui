@@ -6,3 +6,8 @@
 .pie-charts {
   display: block;
 }
+
+.alerts-table-wrapper {
+  width: 100%;
+  height: fit-content;
+}

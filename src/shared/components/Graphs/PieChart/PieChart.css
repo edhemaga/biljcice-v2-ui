@@ -3,6 +3,12 @@
   display: flex;
 }
 
+.chart-wrapper-no-data {
+  height: 300px;
+  width: 100%;
+  display: flex;
+}
+
 .pie-chart {
   max-height: 300px;
   max-width: 300px;

@@ -1,5 +1,5 @@
 export enum ESensorType {
-    Temp = "Temperature",
-    EC = "Electro Conductivity",
-    pH = "pH"
+    "Temperature" = 1,
+    "Electro Conductivity" = 2,
+    "pH" = 3,
 }

@@ -36,7 +36,6 @@ const userSlice = createSlice({
             state.country = initialState.country;
             state.devices = initialState.devices;
         },
-        get: (state) => { }
     }
 });
 

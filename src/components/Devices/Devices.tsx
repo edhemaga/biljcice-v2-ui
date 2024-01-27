@@ -1,8 +1,8 @@
 import "./Devices.css";
 
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
 import Select, { SelectChangeEvent } from "@mui/material/Select";
@@ -13,43 +13,46 @@ import { IDevice } from "../../shared/components/Device/IDevice";
 import { InputLabel, MenuItem } from "@material-ui/core";
 
 const Devices: FC = () => {
-  const deviceData = useSelector((state: RootState) => state.user.devices);
-
-  const [devices, setDevices] = useState<Partial<IDevice>[]>();
-  const [selectedDevice, setSelectedDevice] = useState<string>();
+  const [devices, setDevices] = useState<IDevice[]>([
+    ...(useSelector((state: RootState) => state.user.devices) as IDevice[]),
+  ]);
+  const [selectedDevice, setSelectedDevice] = useState<IDevice | undefined>(
+    devices[0]
+  );
 
   const handleChange = (event: SelectChangeEvent) => {
-    setSelectedDevice(event.target.value);
+    const deviceSelected = devices.find(
+      (device) => device.id === event.target.value
+    );
+    setSelectedDevice(deviceSelected);
   };
-
-  useEffect(() => {
-    if (deviceData) {
-      setDevices(deviceData);
-    }
-    // if (devices?.length === 1) content = <Device data={}></Device>;
-  }, [deviceData]);
 
   return (
     <div>
-      <div className="device-select-wrapper">
-        <InputLabel id="demo-simple-select-autowidth-label">Device</InputLabel>
-        <Select
-          labelId="demo-simple-select-autowidth-label"
-          id="demo-simple-select-autowidth"
-          value={selectedDevice}
-          onChange={handleChange}
-          autoWidth
-          label="Age"
-        >
-          {/* <MenuItem value="">
-          <em>None</em> */}
-          {devices?.map((device) => {
-            //TODO zamijneiti placeholder sa device name
-            return <MenuItem value={device.id}>{device.id}</MenuItem>;
-          })}
-        </Select>
-      </div>
-      {devices ? <Device props={devices[0]} /> : null}
+      {devices.length !== 1 ? (
+        <div className="device-select-wrapper">
+          <InputLabel id="demo-simple-select-autowidth-label">
+            Device
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-autowidth-label"
+            id="demo-simple-select-autowidth"
+            value={selectedDevice?.id}
+            onChange={handleChange}
+            autoWidth
+            label="Age"
+          >
+            {devices?.map((device) => {
+              return (
+                <MenuItem key={device.id} value={device.id}>
+                  {device.id}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </div>
+      ) : null}
+      {devices ? <Device props={selectedDevice} /> : null}
     </div>
   );
 };

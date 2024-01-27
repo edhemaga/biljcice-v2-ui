@@ -5,6 +5,7 @@ import axiosInstance from "../traffic/axios";
 import { IUser } from "../models/User/IUser";
 import { ILineGraphItem, IReadingByMonth } from "../models/Graph/ILineGraph";
 import { IAlertBySeverity } from "../models/Alert/IAlert";
+import { ESeverity } from "../models/Alert/ESeverity";
 
 export const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -99,26 +100,14 @@ export const generateLineGraphForReadings = (data: IReadingByMonth[]) => {
 export const generatePieDataForReadings = (data: IAlertBySeverity[]) => {
     const labels = data.map((item: IAlertBySeverity) => {
         const uniqueLabels: string[] = [];
-        if (!uniqueLabels.find((arg) => arg === item.severity))
-            uniqueLabels.push(item.severity);
+        if (!uniqueLabels.find((arg) => arg === String(item.severity)))
+            uniqueLabels.push(ESeverity[item.severity]);
         return uniqueLabels;
     });
 
-    let items: ILineGraphItem[] = [];
-
-    data.forEach((area: IAlertBySeverity) => {
-        const itemIndex = items.findIndex((arg) => arg.label === area.severity);
-        if (itemIndex < 0) {
-            items = [...items, { label: area.severity, data: [] }];
-            if (items.length !== 0)
-                items[items.length - 1].data = [
-                    ...items[items.length - 1].data,
-                    area.count,
-                ];
-        } else {
-            items[itemIndex].data = [...items[itemIndex].data, area.count];
-        }
-    });
+    const items: number[] = data.map((arg) => {
+        return arg.count;
+    })
 
     return {
         labels, items

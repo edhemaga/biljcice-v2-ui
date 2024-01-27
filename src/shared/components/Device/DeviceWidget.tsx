@@ -54,7 +54,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DeviceWidget: FC<{ data: Partial<IDevice> }> = ({ data }) => {
+const DeviceWidget: FC<{ data: IDevice; buttonShowed: boolean }> = ({
+  data,
+  buttonShowed,
+}) => {
   const classes = useStyles();
 
   const { id, status, createdOn, geoLocation } = data;
@@ -94,7 +97,7 @@ const DeviceWidget: FC<{ data: Partial<IDevice> }> = ({ data }) => {
             <span className={classes.leftMargin}>Location: {geoLocation}</span>
           </div>
         </div>
-        <Button variant="contained">See details</Button>
+        {buttonShowed ? <Button variant="contained">See details</Button> : null}
       </Paper>
     </div>
   );

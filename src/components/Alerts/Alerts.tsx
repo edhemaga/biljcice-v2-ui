@@ -6,18 +6,20 @@ import { useFetch } from "../../shared/hooks/useFetch";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
-import Error from "../../shared/components/Error/Error";
+import { PieChart } from "../../shared/components/Graphs/PieChart/PieChart";
 
 import { CircularProgress } from "@material-ui/core";
-
-import { GridRowsProp, DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 import { IBaseResposne } from "../../shared/models/Base/IBaseResponse";
 import {
   IAlertBySeverity,
   IAlertExtended,
 } from "../../shared/models/Alert/IAlert";
-import { PieChart } from "../../shared/components/Graphs/PieChart/PieChart";
+
+import { ESeverity } from "../../shared/models/Alert/ESeverity";
+import { ESensorType } from "../../shared/models/Sensor/ESensorType";
+import { IPagination } from "../../shared/models/Base/IPagination";
 
 const columns: GridColDef[] = [
   // { field: "id", headerName: "ID", width: 90 },
@@ -27,14 +29,23 @@ const columns: GridColDef[] = [
     headerName: "Severity",
     flex: 2,
     align: "left",
-    //editable: true,
+    valueGetter: (params) => {
+      return ESeverity[params.row.severity];
+    },
+    disableColumnMenu: true,
+    // cellClassName: (params) =>
+    //   clsx("", {
+    //     red: (params.row.severity = 3),
+    //     yellow: (params.row.severity = 2),
+    //     green: (params.row.severity = 1),
+    //   }),
   },
   {
     field: "value",
     headerName: "Reading value",
     flex: 2,
     align: "left",
-    //editable: true,
+    disableColumnMenu: true,
   },
   {
     field: "high",
@@ -42,7 +53,7 @@ const columns: GridColDef[] = [
     // type: "number",
     flex: 1,
     align: "left",
-    //editable: true,
+    disableColumnMenu: true,
   },
   {
     field: "low",
@@ -50,55 +61,57 @@ const columns: GridColDef[] = [
     // type: "number",
     flex: 1,
     align: "left",
-    //editable: true,
+    disableColumnMenu: true,
   },
   {
     field: "name",
     headerName: "Sensor Name",
     flex: 2,
     align: "left",
-    //editable: true,
+    disableColumnMenu: true,
   },
   {
     field: "type",
     headerName: "Sensor Type",
     flex: 2,
     align: "left",
-    //editable: true,
+    valueGetter: (params) => {
+      return ESensorType[params.row.type];
+    },
+    disableColumnMenu: true,
   },
 ];
 
 const Alerts: FC = () => {
   const devices = useSelector((state: RootState) => state.user.devices);
 
-  const [device, setDevice] = useState({ device: devices[0].id });
-  const [params, setParams] = useState({
+  const [device, setDevice] = useState(devices[1].id);
+  const [pagination, setPagination] = useState<IPagination>({
     page: 0,
     size: 10,
   });
 
-  const alerts = useFetch<IBaseResposne<IAlertExtended[]>>(`/alert`, {
-    ...device,
-    ...params,
-  });
+  const alerts = useFetch<IBaseResposne<IAlertExtended[]>>(
+    `/alert?device=${device}`,
+    {
+      ...pagination,
+    }
+  );
 
   const alertsBySeverityLastDay = useFetch<IAlertBySeverity[]>(
-    "/alert/day",
-    null,
-    device
+    `/alert/day?device=${device}`,
+    null
   );
   const alertsBySeverity = useFetch<IAlertBySeverity[]>(
-    "/alert/all",
-    null,
-    device
+    `/alert/all?device=${device}`,
+    null
   );
 
-  // if (alerts.isLoading) return <CircularProgress size={40} />;
-  // if (alerts.error) return <Error />;
+  if (alerts.data?.data.length === 0) return <div>No alerts for device!</div>;
 
   return (
     <div className="alerts-wrapper">
-      <div className="table-wrapper">
+      <div className="alerts-table-wrapper">
         {!alerts.isLoading ? (
           <DataGrid
             pagination
@@ -107,16 +120,16 @@ const Alerts: FC = () => {
             initialState={{
               pagination: {
                 paginationModel: {
-                  page: params.page,
-                  pageSize: params.size,
+                  page: pagination.page,
+                  pageSize: pagination.size,
                 },
               },
             }}
             paginationMode="server"
             rowCount={alerts.data?.count ?? 0}
             onPaginationModelChange={(value) => {
-              setParams({
-                ...params,
+              setPagination({
+                ...pagination,
                 page: value.page,
                 size: value.pageSize,
               });

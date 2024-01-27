@@ -26,6 +26,9 @@ const Form = forwardRef(
 
     useEffect(() => {
       setData(config.state);
+      return () => {
+        setData({});
+      };
     }, [config.state]);
 
     useImperativeHandle(ref, () => ({
@@ -41,18 +44,16 @@ const Form = forwardRef(
       };
     };
 
-
     const sendData = (): void => {
       setIsFormValid(true);
       for (const [key, value] of Object.entries(data)) {
-        if (value === '' || value === 0) {
-          setIsFormValid(false)
-        };
+        if (value === "" || value === 0) {
+          setIsFormValid(false);
+        }
       }
 
-      if (isFormValid)
-        passData(data);
-    }
+      if (isFormValid) passData(data);
+    };
 
     const generateField = (field: IFormField): JSX.Element => {
       let element: JSX.Element = <div></div>;
@@ -63,9 +64,7 @@ const Form = forwardRef(
         setData({ ...(data as Object), [field.id]: e.target.value });
       };
 
-      const handleTouch = (
-        e: any
-      ): void => {
+      const handleTouch = (e: any): void => {
         if (!field.touched) {
           const fieldsModified = fields.map((arg) => {
             if (arg.id === field.id) {
@@ -75,7 +74,6 @@ const Form = forwardRef(
           });
           setFields(fieldsModified);
         }
-
       };
 
       switch (field.type) {
@@ -173,7 +171,7 @@ const Form = forwardRef(
           <hr></hr>
         </div>
         {fields.map((field, indx) => {
-          return <div key={String(indx)}>{generateField(field)}</div>;
+          return <div key={String(field.id)}>{generateField(field)}</div>;
         })}
       </Container>
     );

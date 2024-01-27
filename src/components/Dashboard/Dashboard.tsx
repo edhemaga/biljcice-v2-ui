@@ -11,10 +11,8 @@ import { IReadingByMonth } from "../../shared/models/Graph/ILineGraph";
 
 import DeviceWidget from "../../shared/components/Device/DeviceWidget";
 import { LineGraph } from "../../shared/components/Graphs/LineGraph/LineGraph";
-import { CircularProgress } from "@material-ui/core";
 
 const Dashboard: FC = () => {
-  //Use memo ili use callback
   const user = useSelector((state: RootState) => state.user);
 
   const [device, setDevice] = useState<IDevice>({
@@ -33,32 +31,19 @@ const Dashboard: FC = () => {
     `/reading/${user.devices[0].id}/day`,
     null
   );
+
   return (
     <div className="dashboard-wrapper">
-      {/* {isLoading && <CircularProgress size={40} />} */}
       <div className="device-widget m-15">
-        <DeviceWidget data={device} />
+        <DeviceWidget data={device} buttonShowed />
       </div>
-      {!readingsLastDay.isLoading ? (
-        <div className="graph-widget m-15">
-          <LineGraph
-            title="Reading Last 24 Hours"
-            dataProps={readingsLastDay}
-          />
-        </div>
-      ) : (
-        <CircularProgress size={40} />
-      )}
-      {!readingsLastMonth.isLoading ? (
-        <div className="graph-widget m-15">
-          <LineGraph
-            title="Reading Last 30 Days"
-            dataProps={readingsLastMonth}
-          />
-        </div>
-      ) : (
-        <CircularProgress size={40} />
-      )}
+      <div className="graph-widget m-15">
+        <LineGraph title="Reading Last 24 Hours" dataProps={readingsLastDay} />
+      </div>
+
+      <div className="graph-widget m-15">
+        <LineGraph title="Reading Last 30 Days" dataProps={readingsLastMonth} />
+      </div>
     </div>
   );
 };

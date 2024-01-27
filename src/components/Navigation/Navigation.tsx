@@ -6,7 +6,7 @@ import { AppBar, Toolbar, Button, makeStyles } from "@material-ui/core";
 //Hooks
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { reset, set } from "../../redux/user/userSlice";
+import { reset} from "../../redux/user/userSlice";
 
 // Custom styles using makeStyles
 const useStyles = makeStyles((theme) => ({

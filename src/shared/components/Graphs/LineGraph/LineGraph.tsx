@@ -10,6 +10,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  Colors,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 
@@ -29,29 +30,32 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Colors
 );
-
-export const options = {
-  responsive: true,
-  maintainAspectRatio: true,
-  aspectRatio: 2,
-  plugins: {
-    legend: {
-      position: "top" as const,
-    },
-    title: {
-      display: true,
-      text: "Reading by month",
-    },
-  },
-};
 
 //TODO napraviti neki generic tip
 export const LineGraph: FC<{
   title: string;
   dataProps: IStandardResponse<IReadingByMonth[] | any[]>;
-}> = ({ dataProps }) => {
+}> = ({ dataProps, title }) => {
+  const options = {
+    responsive: true,
+    maintainAspectRatio: true,
+    aspectRatio: 2,
+    plugins: {
+      colors: {
+        forceOverride: true,
+      },
+      legend: {
+        position: "top" as const,
+      },
+      title: {
+        display: true,
+        text: title,
+      },
+    },
+  };
   //This was done in order to prevent unnecessary graph generation on re-render if the data was not changed
   const { labels, items } = useMemo(
     () => generateLineGraphForReadings(dataProps.data ?? []),
