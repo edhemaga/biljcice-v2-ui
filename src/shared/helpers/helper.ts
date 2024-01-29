@@ -17,9 +17,9 @@ export const handleInputChange = (
 export const formatDate = (date: Date): string => {
     return (
         [
-            date.getDay() + 1,
-            date.getMonth() + 1,
-            date.getFullYear(),
+            date.getDate() < 10 ? `0${date.getDate()}` : date.getDate(),
+            date.getMonth() < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1,
+            date.getFullYear() < 10 ? `0${date.getFullYear()}` : date.getFullYear(),
         ].join('/') +
         ' ' +
         [
