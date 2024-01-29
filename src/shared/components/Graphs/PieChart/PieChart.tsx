@@ -31,7 +31,7 @@ export const PieChart: FC<{
     return (
       <div className="chart-wrapper-no-data">
         <div className="centered-text">
-          No data for <b>{title}</b> to show!
+            No data for <b>{title}</b> to show!
         </div>
       </div>
     );

@@ -25,11 +25,9 @@ const Dashboard: FC = () => {
 
   const readingsLastMonth = useFetch<IReadingByMonth[]>(
     `/reading/${user.devices[0].id}/month`,
-    null
   );
   const readingsLastDay = useFetch<IReadingByMonth[]>(
     `/reading/${user.devices[0].id}/day`,
-    null
   );
 
   return (

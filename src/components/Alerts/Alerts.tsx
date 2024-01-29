@@ -85,7 +85,7 @@ const columns: GridColDef[] = [
 const Alerts: FC = () => {
   const devices = useSelector((state: RootState) => state.user.devices);
 
-  const [device, setDevice] = useState(devices[1].id);
+  const [device, setDevice] = useState(devices[0].id);
   const [pagination, setPagination] = useState<IPagination>({
     page: 0,
     size: 10,
@@ -99,12 +99,10 @@ const Alerts: FC = () => {
   );
 
   const alertsBySeverityLastDay = useFetch<IAlertBySeverity[]>(
-    `/alert/day?device=${device}`,
-    null
+    `/alert/day?device=${device}`
   );
   const alertsBySeverity = useFetch<IAlertBySeverity[]>(
-    `/alert/all?device=${device}`,
-    null
+    `/alert/all?device=${device}`
   );
 
   if (alerts.data?.data.length === 0) return <div>No alerts for device!</div>;

@@ -1,16 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 
 import axiosInstance from "../traffic/axios";
 
 import { IPagination } from "../models/Base/IPagination";
+import { IStandardResponse } from "../models/Base/IBaseResponse";
 
 //TODO možda izbaciti ovu paginaciju ili parametre i sve završavati na nivou url-a
-export function useFetch<T>(url: string, pagination?: IPagination | null) {
+export function useFetch<T>(url: string, pagination?: IPagination | null): IStandardResponse<T> {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [data, setData] = useState<T | undefined>();
     const [error, setError] = useState<string>();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axiosInstance.get<T>(url, {

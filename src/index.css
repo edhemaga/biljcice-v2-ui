@@ -22,5 +22,7 @@ code {
 }
 
 .centered-text {
+  width: fit-content;
+  justify-content: justify;
   margin: auto;
 }

@@ -196,20 +196,22 @@ const Device: FC<{ props: IDevice | undefined }> = ({ props }) => {
         <div className="device-widget-wrapper">
           <DeviceWidget data={props} buttonShowed={false} />
         </div>
-        <div className="table-wrapper">
-          {!isLoading ? (
-            <DataGrid
-              onRowClick={handleRowClick}
-              rows={updatedData || data || []}
-              columns={columns}
-            />
-          ) : (
-            <CircularProgress size={40} />
-          )}
-        </div>
-        <div className="sensor-form-wrapper">
-          <Form ref={form} config={sensorConfig} passData={passData}></Form>
-        </div>
+        {!isLoading ? (
+          <>
+            <div className="table-wrapper">
+              <DataGrid
+                onRowClick={handleRowClick}
+                rows={updatedData || data || []}
+                columns={columns}
+              />
+            </div>
+            <div className="sensor-form-wrapper">
+              <Form ref={form} config={sensorConfig} passData={passData}></Form>
+            </div>
+          </>
+        ) : (
+          <CircularProgress size={40} />
+        )}
       </div>
     </>
   );
