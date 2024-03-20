@@ -14,7 +14,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress } from "@mui/material";
 
 import { IReadingByMonth } from "../../../models/Graph/ILineGraph";
 import { IStandardResponse } from "../../../models/Base/IBaseResponse";

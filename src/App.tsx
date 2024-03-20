@@ -1,5 +1,4 @@
 import "./App.css";
-import { CircularProgress } from "@material-ui/core";
 
 import { useEffect, useState } from "react";
 
@@ -22,6 +21,7 @@ import Devices from "./components/Devices/Devices";
 import { IUser } from "./shared/models/User/IUser";
 
 import { getUserData, hasAuthData } from "./shared/helpers/helper";
+import { CircularProgress } from "@mui/material";
 
 function App() {
   const dispatch = useDispatch();

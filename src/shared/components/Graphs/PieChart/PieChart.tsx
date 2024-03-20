@@ -10,7 +10,7 @@ import {
   Colors,
 } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress } from "@mui/material";
 
 import Error from "../../Error/Error";
 

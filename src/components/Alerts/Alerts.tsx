@@ -8,7 +8,6 @@ import { RootState } from "../../redux/store";
 
 import { PieChart } from "../../shared/components/Graphs/PieChart/PieChart";
 
-import { CircularProgress } from "@material-ui/core";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 import { IBaseResposne } from "../../shared/models/Base/IBaseResponse";
@@ -20,6 +19,7 @@ import {
 import { ESeverity } from "../../shared/models/Alert/ESeverity";
 import { ESensorType } from "../../shared/models/Sensor/ESensorType";
 import { IPagination } from "../../shared/models/Base/IPagination";
+import { CircularProgress } from "@mui/material";
 
 const columns: GridColDef[] = [
   // { field: "id", headerName: "ID", width: 90 },

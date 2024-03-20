@@ -5,12 +5,12 @@ import { FC, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
+import { InputLabel, MenuItem } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 import Device from "./Device/Device";
 
 import { IDevice } from "../../shared/components/Device/IDevice";
-import { InputLabel, MenuItem } from "@material-ui/core";
 
 const Devices: FC = () => {
   const [devices, setDevices] = useState<IDevice[]>([

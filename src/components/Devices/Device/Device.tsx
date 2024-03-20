@@ -8,8 +8,8 @@ import axiosInstance from "../../../shared/traffic/axios";
 import Form from "../../../shared/components/Form/Form";
 import DeviceWidget from "../../../shared/components/Device/DeviceWidget";
 
+import { CircularProgress } from "@mui/material";
 import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
-import { CircularProgress } from "@material-ui/core";
 
 import { IDevice } from "../../../shared/components/Device/IDevice";
 import { ISensor, ISensorConfig } from "../../../shared/models/Sensor/ISensor";

@@ -12,7 +12,7 @@ import {
   FormControl,
   FormControlLabel,
   TextField,
-} from "@material-ui/core";
+} from "@mui/material";
 
 interface IProps {
   config: IFormConfig<Object>;

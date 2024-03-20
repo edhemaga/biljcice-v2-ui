@@ -1,23 +1,14 @@
+import "./Navigation.css";
+
 import { FC } from "react";
 
 //Material
-import { AppBar, Toolbar, Button, makeStyles } from "@material-ui/core";
+import { AppBar, Toolbar, Button, makeStyles } from "@mui/material";
 
 //Hooks
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { reset} from "../../redux/user/userSlice";
-
-// Custom styles using makeStyles
-const useStyles = makeStyles((theme) => ({
-  appBar: {
-    width: "100%",
-    marginBottom: theme.spacing(2),
-  },
-  logoutButton: {
-    marginLeft: "auto",
-  },
-}));
+import { reset } from "../../redux/user/userSlice";
 
 const Navigation: FC = () => {
   const dispatch = useDispatch();
@@ -29,10 +20,9 @@ const Navigation: FC = () => {
     dispatch(reset());
     navigate("/login");
   };
-  const classes = useStyles();
 
   return (
-    <AppBar position="static" className={classes.appBar}>
+    <AppBar position="static" className="appbar">
       <Toolbar>
         <Button
           color="inherit"
@@ -68,7 +58,7 @@ const Navigation: FC = () => {
         </Button>
         <Button
           color="inherit"
-          className={classes.logoutButton}
+          className="logout-btn"
           onClick={logout}
         >
           Logout
