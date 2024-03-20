@@ -15,7 +15,7 @@ import axiosInstance from "../../../shared/traffic/axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { set } from "../../../redux/user/userSlice";
-import { jwtDecode } from "jwt-decode";
+
 import { getUserData } from "../../../shared/helpers/helper";
 
 const Login: FC = () => {

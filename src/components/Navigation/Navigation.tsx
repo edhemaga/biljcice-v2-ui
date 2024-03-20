@@ -3,7 +3,7 @@ import "./Navigation.css";
 import { FC } from "react";
 
 //Material
-import { AppBar, Toolbar, Button, makeStyles } from "@mui/material";
+import { AppBar, Toolbar, Button } from "@mui/material";
 
 //Hooks
 import { useNavigate } from "react-router-dom";

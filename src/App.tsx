@@ -42,8 +42,7 @@ function App() {
         setIsAuthenticated(false);
       };
     },
-    // TODO možda staviti dependency userId
-    []
+    [isAuthenticated]
   );
 
   return (
